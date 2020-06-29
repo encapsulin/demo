@@ -1,0 +1,21 @@
+Page: 1
+Date ;Job No;Reference ;Caller;Pickup From ;DeliverTo;Svc ;Qty;;Charge
+6Apr ;2726;W00539186 ;RYAN;ALT ONA ;DANDENONG ;PLT;3pcs ;;75.00
+;;;;MCM Logistics;API;;;;
+6Apr ;2871;w00537504 ;RYAN;ALT ONA ;LILYDALE ;PLT;3pcs ;;75.00
+;;;;MCM Logistics;SARAH WITNISH CO-O;LHAND ;0:00;;0.00
+9Apr ;3371;CHRIS070420 ;RYAN;COOLAROO ;ALTONA ;22TAUT22 ;5:00@;70.00 ;350.00
+;;;;ABBE CORRUGATED ;MCMLogistics;;;;
+9Apr ;3520;862597 ;RYAN;ALT ONA ;DANDENONG SOUTH;PLT;1pc ;;30.00
+;;;;MCM Logistics;AMAZON;;;;
+9Apr ;3527;863537 ;RYAN;ALT ONA ;HIGHETT ;PLT;2pcs ;;50.00
+;;;;MCM Logistics;NATURAL BEAUTY;;;;
+9Apr ;103370;chris070420 ;ryan;COOLAROO ;ALTONA ;22TAUT22 ;8:00@;70.00 ;560.00
+;;;;ABBE CORRUGATED ;MCMLogistics;;;;
+;;;;Onto: ;COOLAROO;;;;
+;;;;;ABBE CORRUGATED;;;;
+;;;;Onto: ;ALTONA;;;;
+;;;;;MCM Logistics;;;;
+10 Apr;;;;Fuel Levy 7.75%;;;;;88.35
+;;;;TOTALCHARGE ;;;;;1228.35
+;;;;GST ;;;;;122.84
