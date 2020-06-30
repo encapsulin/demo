@@ -1,14 +1,14 @@
 package encaps.amaterbox;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,12 +36,17 @@ public class Categ {
 	String date;
 	String date2;
 	String title2;
-		
+			
+	@OneToMany(mappedBy="categ", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private List<Item> items;
 	
-	@OneToMany(mappedBy="categ", cascade = CascadeType.ALL)
-	List<Item> items;
+	public Categ() {
+		items = new ArrayList<>();
+	}
 
-
+	public void addItems(List<Item> items) {
+		this.items.addAll(items);
+	}
 
 	@Override
 	public String toString() {
@@ -52,7 +57,8 @@ public class Categ {
 				+ "\n, country=" + country 
 				+ "\n, date=" + date
 				+ "\n, date2=" + date2
-				+ "\n, items=" + items + "]";
+				+ "\n, items.size=" + items.size() 
+				+ "]";
 	}
 	
 	

@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ParserItem {
+public class ItemParser {
 
 	public static void main(String[] args) throws Exception {
 //		String html = " <p align=\"left\"><b>03/01/2020\n"
@@ -21,7 +21,7 @@ public class ParserItem {
 //		Categ categ = parseCateg(html);
 //		System.out.println(categ);
 
-		String s = "tmp/21.Friendship.html";
+		String s = "tmp/nosubcats.html";
 		Document doc = Jsoup.parse(new File(s), "UTF-8");
 //		System.out.println(parseCategLocation(doc));
 //		System.out.println(parseCategDate2(doc));
@@ -35,12 +35,12 @@ public class ParserItem {
 
 	public static List<Item> parseItems(String html){
 			List<String> list = parseSections(Jsoup.parse(html));
-//			System.out.println(list.size());
 			List<Item> listItems = new ArrayList<>();
 			for (String html2 : list) {
 				listItems.addAll(parseSectionItems(html2));
-//				System.out.println(listItems);
 			}
+			if(list.size()==0)
+				listItems.addAll(parseSectionItems(html));
 			return listItems;
 		}
 	 
@@ -49,6 +49,7 @@ public class ParserItem {
 		String sSection = doc.select("p:eq(0)").text();
 		List<Item> listItems = new ArrayList<>();
 		List<Element> listElement = doc.select("tr");
+		int i = 3;
 		for (Element elem : listElement) {
 			Item item = new Item();
 			item.setNotes(sSection);
@@ -57,7 +58,11 @@ public class ParserItem {
 			item.setFighter_1_country(elem.select("td:eq(2)").html());
 			item.setFighter_2_name(elem.select("td:eq(3)").html());
 			item.setFighter_2_country(elem.select("td:eq(4)").html());
+			item.setResult(elem.select("td:eq(5)").html());
 			listItems.add(item);
+			
+//			if(i-- <= 0)
+//				break;
 		}
 		return listItems;
 	}

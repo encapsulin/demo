@@ -23,7 +23,7 @@ public class Item {
 	Integer id;
 
 	@ManyToOne
-    @JoinColumn(name="categ_id", nullable=false)
+    @JoinColumn(name="categ_id", nullable=true)
     private Categ categ;
 
 	String date;

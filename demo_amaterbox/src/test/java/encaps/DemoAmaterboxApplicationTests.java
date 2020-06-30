@@ -2,6 +2,7 @@ package encaps;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,44 +14,44 @@ import org.springframework.boot.test.context.SpringBootTest;
 import encaps.amaterbox.Categ;
 import encaps.amaterbox.CategRepo;
 import encaps.amaterbox.Item;
-import encaps.amaterbox.ParserItem;
+import encaps.amaterbox.ItemParser;
+import encaps.amaterbox.ItemService;
 
 @SpringBootTest
 class DemoAmaterboxApplicationTests {
 
 	@Test
 	void contextLoads() throws Exception {
-//		 get_categs();
+		get_categs();
 		getItems();
 	}
 
 	@Autowired
-	CategRepo repo;
+	CategRepo repoCateg;
+
+	@Autowired
+	ItemService servItem;
 
 	private void getItems() throws Exception {
-		Iterable<Categ> list = repo.findAll();
+//		
 		int i = 0;
-		for (Categ categ : list) {
-			if (i++ > 3)
-				break;
-			 String url = categ.getHref();
-			 Document doc = Jsoup.connect(url).get();
-			 
-			 categ.setLocation(ParserItem.parseCategLocation(doc));
-			 categ.setDate2(ParserItem.parseCategDate2(doc));
-			 categ.setTitle2(doc.title());
-			 List<Item> listItems = ParserItem.parseItems(doc.html());
-			 
-			 
+//		Categ categ = repoCateg.findById(1).orElseThrow(() -> new Exception("Categ(1) not found"));
+		Iterable<Categ> list = repoCateg.findAll();
+		for (Categ categ : list) 
+		{
+//			if (i++ > 3)
+//				break;
+
+			categ = servItem.parseItemsAndSave(categ);
+			System.out.println(categ);
+			repoCateg.save(categ);
 		}
 	}
 
 	private void get_categs() throws Exception {
 
-
 		String html = "tmp/AmateurBoxingResults.html";
-		File f = new File(html);
-		Document doc = Jsoup.parse(f, "UTF-8");
+		Document doc = Jsoup.parse(new File(html), "UTF-8");
 
 		List<Element> listCategs = doc.select("p[align=left]");
 		int i = 0;
@@ -60,14 +61,16 @@ class DemoAmaterboxApplicationTests {
 
 			System.out.println(elem.html());
 
-			Categ categ = ParserItem.parseCateg(elem.html());
+			Categ categ = ItemParser.parseCateg(elem.html());
 
 			if (!categ.getHref().endsWith(".html"))
 				continue;
 
 			System.out.println(categ);
-			repo.save(categ);
-			i++;
+			repoCateg.save(categ);
+
+//			if (++i >= 3)
+//				break;
 		}
 
 		System.out.println(i);
