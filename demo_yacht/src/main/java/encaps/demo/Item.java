@@ -26,34 +26,35 @@ public class Item {
     @JoinColumn(name="categ_id", nullable=true)
     private Categ categ;
 
-	String date;
-	String result;
-	String rounds;	
-	String round_length;
-	String gender;
-	String country;
-	String location;
-	String tournament;
-	String notes;
-	String fight_winner;
-	String fighter_1_name;
-	String fighter_1_country;
-	String fighter_1_state_team;
-	String fighter_1_weight;
-	String fighter_2_name;
-	String fighter_2_country;
-	String fighter_2_state_team;
-	String fighter_2_weight;
+	String title;
+	String href;	
+	
+	String title2;
+	String title3;
+	String href2;
+	String type;
+	String price;
+	String selerName;
+	String selerTelephone;
+	String selerMobile;
+	String selerFax;
+	String selerWebsite;
+	String selerEmail;
+
 	@Override
 	public String toString() {
-		return "\nItem [id=" + id + "\n, categ=" + categ + "\n, date=" + date + "\n, result=" + result + "\n, rounds=" + rounds
-				+ "\n, round_length=" + round_length + "\n, gender=" + gender + "\n, country=" + country + "\n, location="
-				+ location + "\n, tournament=" + tournament + "\n, notes=" + notes + "\n, fight_winner=" + fight_winner
-				+ "\n, fighter_1_name=" + fighter_1_name + "\n, fighter_1_country=" + fighter_1_country
-				+ "\n, fighter_1_state_team=" + fighter_1_state_team + "\n, fighter_1_weight=" + fighter_1_weight
-				+ "\n, fighter_2_name=" + fighter_2_name + "\n, fighter_2_country=" + fighter_2_country
-				+ "\n, fighter_2_state_team=" + fighter_2_state_team + "\n, fighter_2_weight=" + fighter_2_weight + "]";
+		return "\nItem [id=" + id 
+				+ "\n, href=" + href 
+				+ "\n, title=" + title 				
+				+ "\n, type=" + type 
+				+ "\n, price=" + price 
+				+ "\n, selerName=" + selerName 
+				+ "\n, selerTelephone=" + selerTelephone 
+				+ "\n, selerMobile=" + selerMobile 
+				+ "\n, selerWebsite=" + selerWebsite 
+				+ "\n, selerFax=" + selerFax 
+				+ "\n, selerEmail=" + selerEmail 
+				+ "]";
 	}
-	
-	
+		
 }

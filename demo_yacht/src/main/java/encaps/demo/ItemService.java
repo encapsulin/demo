@@ -26,12 +26,12 @@ public class ItemService {
 //		categ.setLocation(ItemParser.parseCategLocation(doc));
 //		categ.setDate2(ItemParser.parseCategDate2(doc));
 //		categ.setTitle2(doc.title());
-		List<Item> listItems = ItemParser.parseItems(doc.html());
-		listItems.forEach(entity -> {
-			entity.setCateg(categ);
-			repo.save(entity);
-		});
-		categ.addItems(listItems);
+//		List<Item> listItems = CategParser.parseItems(doc.html());
+//		listItems.forEach(entity -> {
+//			entity.setCateg(categ);
+//			repo.save(entity);
+//		});
+//		categ.addItems(listItems);
 
 		return categ;
 	}
