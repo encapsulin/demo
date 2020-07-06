@@ -44,8 +44,8 @@ class Test3ItemsAll {
 
 	@Test
 	void contextLoads() throws Exception {
-		parseItem_(9);
-//		parseItems();
+//		parseItem_(2);
+		parseItems();
 	}
 
 	void parseItems() throws Exception {
@@ -53,7 +53,8 @@ class Test3ItemsAll {
 		if (driver == null)
 			driver = new ChromeDriver();
 
-		Iterable<Item> list = repoItem.findByPriceNull();
+		//Iterable<Item> list = repoItem.findByPriceNull();
+		Iterable<Item> list = repoItem.findAll();
 		int i = 0;
 
 		for (Item item : list) {
@@ -63,7 +64,7 @@ class Test3ItemsAll {
 //				continue;
 
 			parseItem(driver, item);
-			System.out.println(item);
+			//System.out.println(item);
 			repoItem.save(item);
 			System.out.println(++i);
 		}
