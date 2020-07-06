@@ -25,12 +25,19 @@ public class ItemParser {
 //		List<Item> listItem = ItemParser.parseItems(html);
 //		System.out.println(listItem);
 
-		String fn = "tmp/itemFax.html";
+		String fn = "tmp/itemType.html";
 		String html = FilesUtils.read(fn);
 
 		System.out.println(parseRegex(html,">Contact: </td><td.*?>(.+?)</td>"));
 		System.out.println(parseRegex(html,">Fax: *</td><td.*?>(.+?)</td>"));
 		System.out.println(parseRegex(html,">Website: *</td><td.*?href=\"(.+?)\"<"));
+		
+		String txt = FilesUtils.read("tmp/item.txt");
+		System.out.println(ItemParser.parseRegex(txt, "Price: (.+?) "));
+		
+		String s = ItemParser.parseRegex(html, "Vessel type:</td>.*?>(.+?)</td>");
+		System.out.println(s);
+
 	}
 
 
@@ -67,7 +74,7 @@ public class ItemParser {
 	}
 
 	public static String parseRegex(String sHtml, String p) {
-		return parseRegex(sHtml,Pattern.compile(p));		
+		return parseRegex(sHtml,Pattern.compile(p, Pattern.DOTALL));		
 	}
 
 
