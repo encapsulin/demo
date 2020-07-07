@@ -21,25 +21,49 @@ public class DemoService {
 		String csv = "";
 		StringBuilder sb = new StringBuilder();
 		Iterable<Categ> categs1 = repoCateg.findByParentIdNull();
-		for (Categ categ1 : categs1) {
+		int i = 0;
+		LEVEL1: for (Categ categ1 : categs1) {
 
 			Iterable<Categ> categs2 = repoCateg.findByParentId(categ1.getId());
 			for (Categ categ2 : categs2) {
-				String s = categ1.getTitle() + ", ";
-				s += categ2.getTitle() + ",";
-				
+
 				Iterable<Item> items = repoItem.findByCategId(categ2.getId());
-				int i = 0;
-				for (Item item : items) {					
-					s += item.getTitle() + "\r\n";
+
+				for (Item item : items) {
+					String s = "";
+					s += wrap(item.getHref()) + ",";
+					s += wrap(categ1.getTitle()) + ", ";
+					s += wrap(categ2.getTitle()) + ",";
+					s += wrap(item.getType()) + ",";
+					s += wrap(item.getPrice()) + ",";
+					s += wrap(item.getSelerName()) + ",";
+					s += wrap(item.getSelerTelephone()) + ",";
+					s += wrap(item.getSelerMobile()) + ",";
+					s += wrap(item.getSelerFax()) + ",";
+					s += wrap(item.getSelerWebsite()) + ",";
+					s += "\r\n";
 					sb.append(s);
-					if(++i>3)
-						break;
-				}				
-				
+					if (++i > 1000)
+						break LEVEL1;
+				}
+
 			}
 
 		}
-		return sb.toString();
+		String head = "URL of boat," + 
+				"Category," + 
+				"Subcategory," + 
+				"Vessel type," + 
+				"Price," + 
+				"Contact name," + 
+				"Telephone," + 
+				"Mobile," + 
+				"Fax," + 
+				"Website of seller\n";
+		return head + sb.toString();
+	}
+	
+	String wrap(String s){
+		return '"' + s + '"';
 	}
 }
