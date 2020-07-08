@@ -22,7 +22,7 @@ class ItemTest2 {
 	@Test
 	void contextLoads() throws Exception {
 //		Pageable limit = PageRequest.of(0,10);
-		Iterable<Item> listItems = repoItem.findAllByCol1NotNullAndScol1NullAndDoneNull();
+		Iterable<Item> listItems = repoItem.findAllByDoneNull();
 		int limit = 0;
 		for (Item item : listItems) {
 			System.out.println(item);

@@ -22,16 +22,18 @@ public class ItemParser {
 
 	public static void main(String[] args) throws Exception {
 
-//		String fn = "tmp/items.html";
-//		String html = FilesUtils.read(fn);
-//		List<Item> listItem = ItemParser.parseItems(html);
-//		System.out.println(listItem);
+		String fn = "tmp/items.html";
+		String html = FilesUtils.read(fn);
+		List<Item> listItem = ItemParser.parseItems(html);
+		System.out.println(listItem);
 
-		String fn = findFile("332");
-//		System.out.println(fn);
-
-//		Item listItem = ItemParser.parseItemFile(fn);
-//		System.out.println(listItem);
+//		String fn = findFile("332");
+////		System.out.println(fn);
+////
+//		Item item = new Item();
+//		item.setCol1("332");		
+//		ItemParser.parseItemFile(item);
+//		System.out.println(item);
 	}
 
 	public static String findFile(String s) throws Exception {
@@ -59,7 +61,7 @@ public class ItemParser {
 			Elements elems = doc.select("side.labcodes-bottom div.row div");
 			item.setScol1(elems.get(0).selectFirst("p").text());
 			item.setScol2(elems.get(1).selectFirst("p").text());
-			item.setScol3(elems.get(2).select(".row").get(0).selectFirst("p").text());
+			item.setScol3(elems.get(3).select(".row").get(0).selectFirst("p").text());
 			item.setScol4(elems.get(2).select(".row").get(1).selectFirst("p").text());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -88,24 +90,24 @@ public class ItemParser {
 		item.setCol2(elem.select("td:eq(1)").text());
 		item.setCol3(elem.select("td:eq(2)").text());
 		item.setCol4(elem.select("td:eq(3)").text());
-		item.setCol5(elem.select("td:eq(5)").text());
-		item.setCol6(elem.select("td:eq(6)").text());
-		item.setCol7(elem.select("td:eq(7)").text());
-		item.setCol8(elem.select("td:eq(8)").text());
-		item.setCol9(elem.select("td:eq(9)").text());
-		item.setCol10(elem.select("td:eq(10)").text());
-		item.setCol11(elem.select("td:eq(11)").text());
-		item.setCol12(elem.select("td:eq(12)").text());
-		item.setCol13(elem.select("td:eq(13)").text());
-		item.setCol14(elem.select("td:eq(14)").text());
-		item.setCol15(elem.select("td:eq(15)").text());
-		item.setCol16(elem.select("td:eq(16)").text());
-		item.setCol17(elem.select("td:eq(17)").text());
-		item.setCol18(elem.select("td:eq(18)").text());
-		item.setCol19(elem.select("td:eq(19)").text());
-		item.setCol20(elem.select("td:eq(20)").text());
-		item.setCol21(elem.select("td:eq(21)").text());
-		item.setCol22(elem.select("td:eq(22)").text());
+		item.setCol5(elem.select("td:eq(4)").text());
+		item.setCol6(elem.select("td:eq(5)").text());
+		item.setCol7(elem.select("td:eq(6)").text());
+		item.setCol8(elem.select("td:eq(7)").text());
+		item.setCol9(elem.select("td:eq(8)").text());
+		item.setCol10(elem.select("td:eq(9)").text());
+		item.setCol11(elem.select("td:eq(10)").text());
+		item.setCol12(elem.select("td:eq(10)").text());
+		item.setCol13(elem.select("td:eq(12)").text());
+		item.setCol14(elem.select("td:eq(13)").text());
+		item.setCol15(elem.select("td:eq(14)").text());
+		item.setCol16(elem.select("td:eq(15)").text());
+		item.setCol17(elem.select("td:eq(16)").text());
+		item.setCol18(elem.select("td:eq(17)").text());
+		item.setCol19(elem.select("td:eq(18)").text());
+		item.setCol20(elem.select("td:eq(19)").text());
+		item.setCol21(elem.select("td:eq(20)").text());
+		item.setCol22(elem.select("td:eq(21)").text());
 		return item;
 	}
 

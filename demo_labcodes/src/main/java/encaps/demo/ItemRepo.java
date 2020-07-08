@@ -8,7 +8,7 @@ public interface ItemRepo extends CrudRepository<Item, Integer> {
 
 	Iterable<Item> findAllTopTenByCol4NotNull();
 
-	Iterable<Item> findAllByCol1NotNullAndScol1NullAndDoneNull();
+	Iterable<Item> findAllByDoneNull();
 
 
 

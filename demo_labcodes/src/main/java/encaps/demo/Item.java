@@ -1,14 +1,12 @@
 package encaps.demo;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +14,10 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(
+		indexes = {@Index(name = "my_index_name",  columnList="col1", unique = true)}
+		)
+        
 public class Item {
 
 	@Id
@@ -25,6 +27,7 @@ public class Item {
 	Integer page;
 	Boolean done;
 
+//	@Index(unique="true")
 	String col1;
 	String col2;
 	String col3;
@@ -53,6 +56,7 @@ public class Item {
 //	String Formule;
 //	String Formuleuitleg;
 //	String Clusters;
+	@Column(length=1000000)
 	String scol1;
 	String scol2;
 	String scol3;

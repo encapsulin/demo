@@ -54,8 +54,13 @@ class ItemTest {
 			List<Item> listItems_ = ItemParser.parseItems(html);
 			int iElem = 1;
 			for (Item item : listItems_) {
-				repoItem.save(item);
-				scrapeItemz(iPage, iElem++, item.getCol1());
+				try {
+					item.setPage(iPage);
+					repoItem.save(item);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				// scrapeItemz(iPage, iElem++, item.getCol1());
 //				if (iElem >= 3)
 //					break;
 			}
@@ -85,19 +90,19 @@ class ItemTest {
 			tr.click();
 			Thread.sleep(3000);
 			Runtime.getRuntime().exec("xdotool key Escape");
-			Thread.sleep(100);
+			Thread.sleep(1000);
 			Runtime.getRuntime().exec("xdotool mousemove 500 500");
-			Thread.sleep(100);
-			Runtime.getRuntime().exec("xdotool click 3");			
-			Thread.sleep(100);
+			Thread.sleep(1000);
+			Runtime.getRuntime().exec("xdotool click 3");
+			Thread.sleep(1000);
 			Runtime.getRuntime().exec("xdotool mousemove_relative 10 100");
-			Thread.sleep(100);
-			Runtime.getRuntime().exec("xdotool click 1");			
-			Thread.sleep(100);
+			Thread.sleep(1000);
+			Runtime.getRuntime().exec("xdotool click 1");
+			Thread.sleep(1000);
 			Runtime.getRuntime().exec("xdotool type page_" + iPage + "_item_" + s_);
-			Thread.sleep(100);
+			Thread.sleep(1000);
 			Runtime.getRuntime().exec("xdotool key Return");
-			Thread.sleep(100);
+			Thread.sleep(1000);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -105,8 +110,8 @@ class ItemTest {
 	}
 
 	boolean clickNext(int iPage_) {
-		System.out.println("clickNext()"+iPage_);
-//		if (iPage_ >= 3)
+		System.out.println("clickNext()" + iPage_);
+//		if (iPage_ >= 1)
 //			return false;
 
 //		String url = "https://bepalingen.nhg.org/labcodes/determinations?page=" + iPage_;
@@ -120,14 +125,14 @@ class ItemTest {
 			for (WebElement a : list) {
 				String href = a.getAttribute("href");
 				System.out.println(href);
-				if(href.endsWith("page="+iPage_)) {
+				if (href.endsWith("page=" + iPage_)) {
 //					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", a);//					
 					System.out.println("a.click()");
 					a.click();
-					Thread.sleep(5000); 
+					Thread.sleep(5000);
 					return true;
 				}
-					
+
 			}
 
 		} catch (Exception e) {
