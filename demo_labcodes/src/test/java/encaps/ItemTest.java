@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,28 +28,11 @@ class ItemTest {
 
 	WebDriver driver;
 
-	@Before(value = "")
-	void testBefore() {
-//		if (driver == null)
-//			driver = new ChromeDriver();
-
-	}
-
-	@After(value = "")
-	void testAfter() {
-		if (driver != null) {
-//			driver.close();
-//			driver.quit();
-		}
-	}
-
 	@Test
 	void contextLoads() throws Exception {
-
 		List<Item> listItems = parseItems();
 		System.out.println(listItems);
 		System.out.println(listItems.size());
-
 	}
 
 	List<Item> parseItems() throws Exception {
@@ -64,51 +48,93 @@ class ItemTest {
 
 		int iPage = 1;
 		do {
+			resolveCaptcha();
 			String html = driver.getPageSource();
-//			Thread.sleep(3000);
-//			FilesUtils.save(html);
+
 			List<Item> listItems_ = ItemParser.parseItems(html);
+			int iElem = 1;
+			for (Item item : listItems_) {
+				repoItem.save(item);
+				scrapeItemz(iPage, iElem++, item.getCol1());
+//				if (iElem >= 3)
+//					break;
+			}
 			listItems.addAll(listItems_);
 
 			System.out.println(listItems_);
 			System.out.println(listItems_.size());
 
-			parseItemz();
-
-		} while (clickNext(iPage++));
+		} while (clickNext(++iPage));
 
 		return listItems;
 	}
 
-	void parseItemz() throws Exception {
-		System.out.println("parseItemz()");
-		List<WebElement> list = driver.findElements(By.cssSelector("div.table-container table tbody tr"));
-		for (WebElement tr : list) {
-			tr.click();
-			
-			Item item = ItemParser.parseItem(tr.getAttribute("outerHTML"));
-			String sBash = String.format("sleep 2; xdotool mousemove 500 500 click 3\n" + 
-					"sleep 2; xdotool mousemove_relative 10 100 click 1\n" + 
-					"sleep 2; xdotool type \"page_1_item_%s\"\n" + 
-					"sleep 2; xdotool key Return\n" + 
-					"");
-			Runtime.getRuntime().exec(sBash);
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	private void resolveCaptcha() {
+		try {
+			driver.findElement(By.cssSelector("a[class=cookie-notice__accept]")).click();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		;
+	}
+
+	void scrapeItemz(int iPage, int iElem_, String s_) throws Exception {
+		System.out.println("scrapeItemz()");
+		try {
+			WebElement tr = driver.findElements(By.cssSelector("div.table-container table tbody tr")).get(iElem_ - 1);
+
+			tr.click();
+			Thread.sleep(3000);
+			Runtime.getRuntime().exec("xdotool key Escape");
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool mousemove 500 500");
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool click 3");			
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool mousemove_relative 10 100");
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool click 1");			
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool type page_" + iPage + "_item_" + s_);
+			Thread.sleep(100);
+			Runtime.getRuntime().exec("xdotool key Return");
+			Thread.sleep(100);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	boolean clickNext(int iPage_) {
-		if (iPage_ > 1)
-			return false;
+		System.out.println("clickNext()"+iPage_);
+//		if (iPage_ >= 3)
+//			return false;
 
-		String url = "https://bepalingen.nhg.org/labcodes/determinations?page=" + iPage_;
-		driver.get(url);
-		return true;
+//		String url = "https://bepalingen.nhg.org/labcodes/determinations?page=" + iPage_;
+//		driver.get(url);
+		try {
+
+//			list.stream()
+//			.filter(a->a.getAttribute("href").endsWith("page="+iPage_))
+//			.forEach(a->a.click());
+			List<WebElement> list = driver.findElements(By.cssSelector("a.page-link"));
+			for (WebElement a : list) {
+				String href = a.getAttribute("href");
+				System.out.println(href);
+				if(href.endsWith("page="+iPage_)) {
+//					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", a);//					
+					System.out.println("a.click()");
+					a.click();
+					Thread.sleep(5000); 
+					return true;
+				}
+					
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 }

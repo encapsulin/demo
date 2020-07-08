@@ -1,0 +1,42 @@
+package encaps;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import encaps.demo.Item;
+import encaps.demo.ItemParser;
+import encaps.demo.ItemRepo;
+
+@SpringBootTest
+class ItemTest2 {
+
+	@Autowired
+	ItemRepo repoItem;
+
+	WebDriver driver;
+
+	@Test
+	void contextLoads() throws Exception {
+//		Pageable limit = PageRequest.of(0,10);
+		Iterable<Item> listItems = repoItem.findAllByCol1NotNullAndCol4NotNullAndScol3Null();
+		int limit = 0;
+		for (Item item : listItems) {
+			System.out.println(item);
+
+			{
+				ItemParser.parseItemFile(item);
+				repoItem.save(item);
+				System.out.println(item);
+				if (limit >= 1)
+					break;
+				System.out.println(limit++);
+			}
+		}
+//		System.out.println(listItems);
+//		System.out.println(listItems.size());
+	}
+}
