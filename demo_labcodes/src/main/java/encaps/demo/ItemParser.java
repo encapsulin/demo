@@ -65,6 +65,7 @@ public class ItemParser {
 			System.out.println(e.getMessage());
 		}
 
+		item.setDone(true);
 		return item;
 	}
 

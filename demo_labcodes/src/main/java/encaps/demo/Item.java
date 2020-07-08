@@ -23,6 +23,7 @@ public class Item {
 	Integer id;
 	String title; 
 	Integer page;
+	Boolean done;
 
 	String col1;
 	String col2;
