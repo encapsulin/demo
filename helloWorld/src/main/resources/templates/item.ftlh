@@ -8,9 +8,9 @@ background-color:silver;
 }
 </style>
 
-<form method=post >
+<form method=post action="/item/submit">
 <table border=0>
-<tr><td colspan=3 align=center class="title"><b>Items</b></td></tr>
+<tr><td colspan=3 align=center class="title"><b>Item</b></td></tr>
 
 <tr>
 	<th>id</th>
@@ -18,27 +18,17 @@ background-color:silver;
 	<th>action</th>
 </tr>
 
-<#list items as item> 
+ 
 <tr>
 	<td>${item.id}</td>
-	<td>${item.title}</td>
-	<td><a href="/del?id=${item.id}">[del]</a></td>
+	<td><input type=text name="title" value="${item.title}"></td>
+	<td><input type=submit value="Submit"></td>
 </tr>
-</#list>
-
-<tr><td colspan=3 class="title"></td></tr> 
-
-<tr>
-<td></td>
-<td><input type=text name="title"></td>
-<td><input type=submit value="Add"></td>
-
-</td></tr>
-
 
 
 </table>
 
+<input type=hidden name="id" value="${item.id}">
 </form>
 
 <!-- if itemz??>
