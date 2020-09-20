@@ -28,11 +28,15 @@ public class ItemController {
 //		List<ItemEntity> list = repo.findAllByOrderByIdDesc();
 
 		long count = repo.count();
-		page = (page == null) ? 0 : page;
-		int size = 50;
+		System.out.println("repo.count():"+ count);
+		page = (page == null) ? 0 : page-1;
+		System.out.println("page:"+ page);
+		int size = 100;
 		List<Integer> listPage = new ArrayList<>();
-		for (int i = 1; i < count / size; i++)
+		int i = 1;
+		for (i = 1; i <= count / size; i++)
 			listPage.add(i);
+		listPage.add(i);
 		model.addAttribute("pages", listPage);
 		Pageable pageAble = PageRequest.of(page, size);
 		List<ItemEntity> list = repo.findAllByOrderByIdDesc(pageAble);
