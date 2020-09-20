@@ -28,7 +28,7 @@ background-color:silver;
 
 </table>
 
-<input type=hidden name="id" value="${item.id}">
+<input type=hidden name="id" value="${item.id?long?c}">
 </form>
 
 <!-- if itemz??>

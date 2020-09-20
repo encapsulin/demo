@@ -18,7 +18,7 @@ class HelloWorldApplicationTests {
 
 	@Test
 	void contextLoads() {
-		contextLoadsThreads();
+//		contextLoadsThreads();
 //		save();
 	}
 

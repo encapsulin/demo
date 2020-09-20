@@ -3,6 +3,7 @@ package helloWorld;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ItemRepository extends CrudRepository<ItemEntity, Integer> {
@@ -76,5 +77,7 @@ public interface ItemRepository extends CrudRepository<ItemEntity, Integer> {
 	public List<ItemEntity> findAllByOrderByIdAsc();
 	
 	public List<ItemEntity> findAllByOrderByIdDesc();
+
+	public List<ItemEntity> findAllByOrderByIdDesc(Pageable page);
 
 }

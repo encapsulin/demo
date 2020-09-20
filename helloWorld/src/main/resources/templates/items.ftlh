@@ -25,13 +25,20 @@ background-color:silver;
 	<td>${item.id}</td>
 	<td>${item.title}</td>
 	<td>${item.updated}</td>
-	<td><a href="/item/edit?id=${item.id}">[edit]
-	<a href="/item/del?id=${item.id}">[del]</a></td>
+	<td><a href="/item/edit?id=${item.id?long?c}">[edit]</a>
+	<a href="/item/del?id=${item.id?long?c}">[del]</a></td>
 </tr>
 </#list>
 
 <tr><td colspan=4 class="title"></td></tr> 
 
+<tr>
+	<td colspan=4>
+<#list pages as page> 
+<a href="?page=${page}">${page}</a>
+</#list>
+</td>
+</tr>
 
 </table>
 

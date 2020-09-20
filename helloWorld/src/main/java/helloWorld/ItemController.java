@@ -1,12 +1,12 @@
 package helloWorld;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,38 +22,30 @@ public class ItemController {
 	ItemRepository repo;
 
 	@GetMapping
-	public String item(Model model) {
+	public String item(Model model, @RequestParam(required = false) Integer page) {
 //		Iterable<ItemEntity> list = repo.findAll();
 
-		List<ItemEntity> list = repo.findAllByOrderByIdDesc();
-		// System.out.println(list);
+//		List<ItemEntity> list = repo.findAllByOrderByIdDesc();
 
-//		Iterator itr = itemsIter.iterator();
-//
-//		List<ItemEntity> list = new ArrayList<>();
-//
-//		if (!itr.hasNext())
-//			list.add(new ItemEntity(1,"empty"));
-//		else
-//			do {
-//				list.add((ItemEntity) itr.next());
-//			} while (itr.hasNext());
+		long count = repo.count();
+		page = (page == null) ? 0 : page;
+		int size = 50;
+		List<Integer> listPage = new ArrayList<>();
+		for (int i = 1; i < count / size; i++)
+			listPage.add(i);
+		model.addAttribute("pages", listPage);
+		Pageable pageAble = PageRequest.of(page, size);
+		List<ItemEntity> list = repo.findAllByOrderByIdDesc(pageAble);
 
-		// System.out.println(list);
-//		Collections.sort(list, (i1,i2)-> i1.id - i2.id);
+		System.out.println(list.size());
+
 		model.addAttribute("items", list);
 		return "items";
 	}
 
-//	@PostMapping
-//	public String add(ItemEntity entity) {
-//		System.out.println(entity);
-//		repo.save(entity);
-//		return "redirect:/";
-//	}
-
 	@GetMapping("/item/edit")
 	public String add(@RequestParam(required = false) Integer id, Model model) {
+		// Integer id = Integer.parseInt(sId.replaceAll("[^0-9]", ""));
 		ItemEntity entity = new ItemEntity();
 		if (id != null && id > 0) {
 			Optional<ItemEntity> opt = repo.findById(id);
@@ -63,14 +55,14 @@ public class ItemController {
 		model.addAttribute("item", entity);
 		return "item";
 	}
-	
+
 	@PostMapping("/item/submit")
 	public String submit(ItemEntity entity) {
 		System.out.println(entity);
 		repo.save(entity);
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/item/del")
 	public String del(ItemEntity entity) {
 		System.out.println(entity);
