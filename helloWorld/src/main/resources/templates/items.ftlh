@@ -7,10 +7,12 @@ th {
 background-color:silver;
 }
 </style>
-<a href="/item/edit">Add new</a>
+
 
 <form method=post >
 <table border=0>
+
+<tr><td colspan=4 align=right ><a href="/item/edit">[add]</a></td></tr>
 <tr><td colspan=4 align=center class="title"><b>Items</b></td></tr>
 
 <tr>
@@ -25,7 +27,7 @@ background-color:silver;
 	<td>${item.id}</td>
 	<td>${item.title}</td>
 	<td>${item.updated}</td>
-	<td><a href="/item/edit?id=${item.id?long?c}">[edit]</a>
+	<td align=right ><a href="/item/edit?id=${item.id?long?c}">[edit]</a>
 	<a href="/item/del?id=${item.id?long?c}">[del]</a></td>
 </tr>
 </#list>
