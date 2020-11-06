@@ -1,45 +1,87 @@
 
-
 import java.util.*;
+import java.util.stream.Stream;
 
 public class SpeedCalc {
 
 	public static void main(String[] args) {
 		System.out.println("-=START=-");
 		SpeedCalc wdc = new SpeedCalc();
-		List<Integer> data = new ArrayList<Integer>();
-		for (int i = 0; i < 4000; i++)
+		List<Integer> data = new ArrayList<>();
+		System.out.println("populate");
+		for (int i = 0; i < 30000; i++)
 			data.add(i);
+
+		System.out.println("calculate");
+		double d = 0;
 		long lStart = System.currentTimeMillis();
-		wdc.process(data, 1);
-		long lTime = (System.currentTimeMillis() - lStart) / 1000;
-		System.out.println(lTime);
+		d = wdc.process(data, 1);
+		long lStop = System.currentTimeMillis();
+		System.out.printf("\nStream: %f", d);
+		System.out.printf("\n%d diff %d = %d ms, %d sec", lStart, lStop, lStop - lStart, (lStop - lStart) / 1000);
 
 		lStart = System.currentTimeMillis();
-		wdc.process(data, 2);
-		lTime = (System.currentTimeMillis() - lStart) / 1000;
-		System.out.println(lTime);
+		d = wdc.process(data, 2);
+		lStop = System.currentTimeMillis();
+		System.out.printf("\nParall: %f", d);
+		System.out.printf("\n%d diff %d = %d ms, %d sec", lStart, lStop, lStop - lStart, (lStop - lStart) / 1000);
 
-		System.out.println("-=FINISH=-");
+		System.out.println("\n\n-=FINISH=-");
+		
+		//test();
+	}
+	
+	static void test() {
+//		Stream<String> stream = Stream.of("a","b","c","d");
+		List<String> list = new ArrayList<>();
+		for(char c = '0'; c<='z'; c++)
+			list.add(String.valueOf(c));
+		String str = "";
+		
+		str = list.stream().reduce("", (a,b)-> a+b);
+		System.out.println(str);
+		
+		str = list.parallelStream().reduce("", (a,b)-> a+b);
+		System.out.println(str);
 	}
 
-	private void process(List<Integer> data, int i) {
+	private double process(List<Integer> data, int i) {
 		if (i == 1)
-			data.stream().map(a -> process(a)).count();
+//			return data.stream().map(a -> process(a)).count();// reduce((a,b)->a+b).orElseThrow();
+		return data.stream().map(a -> process1(a)).reduce((a,b)->a+b).orElseThrow();
 		else
-			data.parallelStream().map(a -> process(a)).count();
+//			return data.parallelStream().map(a -> process(a)).count();
+			return data.parallelStream().map(a -> process1(a)).reduce((a,b)->a+b).orElseThrow();
 	}
 
-	int process(int i) {
-		try {
-			// Thread.sleep(10);
-			double d = 0;
-			for (double j = 0; j < 5000000; j++)
-				d *= Math.PI;
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return i + 1;
+	double process(int i) {
+		double d = 1;
+//		try {
+//			// Thread.sleep(10);
+//			for (int j = 0; j < 1000000000; j++)
+//				d *= Math.PI * Math.random() * Math.cos(0.1) + System.currentTimeMillis();
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+		for (int j = 0; j < 1; j++)
+			d += Math.PI * Math.cos(0.1);
+
+		return d;
 	}
+	
+	double process1(int i) {
+		double d = 1;
+//		try {
+//			// Thread.sleep(10);
+//			for (int j = 0; j < 1000000000; j++)
+//				d *= Math.PI * Math.random() * Math.cos(0.1) + System.currentTimeMillis();
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+		for (int j = 0; j < i; j++)
+			d += Math.PI * Math.cos(0.1);
+
+		return d;
+	}	
 
 }
