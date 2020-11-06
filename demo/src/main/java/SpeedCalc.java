@@ -48,10 +48,10 @@ public class SpeedCalc {
 	private double process(List<Integer> data, int i) {
 		if (i == 1)
 //			return data.stream().map(a -> process(a)).count();// reduce((a,b)->a+b).orElseThrow();
-		return data.stream().map(a -> process1(a)).reduce((a,b)->a+b).orElseThrow();
+		return data.stream().map(a -> process1(a)).reduce((a,b)->a+b).orElse(0.0);
 		else
 //			return data.parallelStream().map(a -> process(a)).count();
-			return data.parallelStream().map(a -> process1(a)).reduce((a,b)->a+b).orElseThrow();
+			return data.parallelStream().map(a -> process1(a)).reduce((a,b)->a+b).orElse(0.0);
 	}
 
 	double process(int i) {
