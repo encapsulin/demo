@@ -70,7 +70,7 @@ public class SpeedCalc {
 		double d = 1;
 		try {
 			// Thread.sleep(10);
-			for (int j = 0; j < 1000000000; j++)
+			for (int j = 0; j < 1000000; j++)
 				d *= Math.PI * Math.random() * Math.cos(0.1) + System.currentTimeMillis();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
