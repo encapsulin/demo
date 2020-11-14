@@ -9,7 +9,7 @@ public class SpeedCalc {
 		SpeedCalc wdc = new SpeedCalc();
 		List<Integer> data = new ArrayList<>();
 		System.out.println("populate");
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 100000; i++)
 			data.add(i);
 
 		System.out.println("\n\n######################## calculate 1");

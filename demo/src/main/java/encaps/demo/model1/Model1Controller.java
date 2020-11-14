@@ -8,45 +8,50 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+import encaps.demo.model1.*;
+
+//@RestController
+@Controller
 @RequestMapping("/model1")
 public class Model1Controller {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(Model1Controller.class);
-	
+
 	@Autowired
 	private Model1Repo repo;
-	
-	@GetMapping("/")
+
+	@GetMapping("/rest")
 //	public @ResponseBody sqrt(@RequestParam(value="v") String sVal) {
-		public Model1 asdf() {
-		
-		Model1 m = new Model1();
-		m.setTitle("asdf");
-		log.info(m.toString());
-		repo.save(m);
-		log.info(m.toString());
-		
-		return m;
+	public Iterable<Model1> all() {
+		Iterable<Model1> all = repo.findAll();
+		log.info(all.toString());
+		return all;
 	}
 	
-	@GetMapping("/sqrt")
+	@GetMapping("/allS")
 //	public @ResponseBody sqrt(@RequestParam(value="v") String sVal) {
-		public  Map<String, String> sqrt(@RequestParam(value="v") String sVal) {
-		
-		Model1 m = new Model1();
-		m.setTitle("asdf");
-		repo.save(m);
-		
-		Map<String,String> aMap = new HashMap<>();
-		aMap.put(sVal, "value");
-		List<String> aList = new ArrayList<>();
-		aList.add("asdf");
-		return aMap;
+	public String allS() {
+		Iterable<Model1> all = repo.findAll();
+		log.info(all.toString());
+		return all.toString();
+	}	
+	
+	@GetMapping
+	public String get() {
+		return "model1";
 	}
+	
+	@PostMapping
+	public String post(Model4 model) {
+		System.out.println(model);
+		return "model1";
+	}
+
 }

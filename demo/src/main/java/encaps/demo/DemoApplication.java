@@ -1,7 +1,9 @@
 package encaps.demo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import encaps.demo.model1.Model1;
 import encaps.demo.model1.Model1Controller;
@@ -24,9 +28,7 @@ public class DemoApplication implements CommandLineRunner{
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Autowired
-	Model1Repo repo;
-	
+
 	@Override
 	public void run(String... args) throws Exception {		
 		System.out.println("-= START =-");
@@ -49,4 +51,16 @@ public class DemoApplication implements CommandLineRunner{
 //		
 		System.out.println("-= STOP =-");
 	}
+//	
+//	@GetMapping
+////	public @ResponseBody sqrt(@RequestParam(value="v") String sVal) {
+//		public  Map<String, String> sqrt(@RequestParam(value="v") String sVal) {
+//				
+//		Map<String,String> aMap = new HashMap<>();
+//		aMap.put(sVal, "value");
+//		List<String> aList = new ArrayList<>();
+//		aList.add("asdf");
+//		return aMap;
+//	}	
+//	
 }
